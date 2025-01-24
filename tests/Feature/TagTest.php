@@ -4,13 +4,14 @@ namespace Tests\Feature;
 
 use App\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use
+Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class TagTest extends TestCase
 {
     // garante que quando rodado o teste, o banco de dados é atualizado.
-    use RefreshDatabase;
+    //use RefreshDatabase;
     /**
      * A basic feature test example.
      */
