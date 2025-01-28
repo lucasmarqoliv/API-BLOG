@@ -24,7 +24,23 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('post/excluir/{id}',[PostController::class,'destroy'])->name('post.destroy');
     Route::put('post/atualizar/{id}',[PostController::class,'update'])->name('post.update');
     Route::get('post/visualizar/{id}',[PostController::class,'show'])->name('post.show');
+
+
     Route::post('comentario/salvar',[ComentarioController::class,'store'])->name('comentario.salvar');
+    Route::get('comentario/index', [ComentarioController::class, 'index'])->name('comentario.listar');
+    Route::get('comentario/exibir/{id}', [ComentarioController::class, 'show']);
+    Route::delete('comentario/excluir/{id}', [ComentarioController::class, 'destroy'])->name('comentario.excluir');
+    Route::put('comentario/update/{id}', [ComentarioController::class, 'update'])->name('comentario.update'); // put metodo para editar conteudo do comentario.
+
+
+
+
+
+
+
+
+
+
 
     Route::get('categorias/',[CategoriaController::class,'index'])->name('categoria.index');
     Route::post('categoria/salvar',[CategoriaController::class,'store'])->name('categoria.store');

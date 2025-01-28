@@ -52,18 +52,18 @@ class CategoriaControllerTest extends TestCase
         ];
 
         // Realiza a requisição POST com o token Bearer
-         $response = $this->postJson('/api/categoria/salvar', $dados, [
+        $response = $this->postJson('/api/categoria/salvar', $dados, [
             'Authorization' => 'Bearer ' . $token,
         ]);
 
          // Verifica se a resposta tem status 201 (Created)
-         $response->assertStatus(201);
+        $response->assertStatus(201);
 
          // Verifica se a categoria foi criada
-         $this->assertDatabaseHas('categoria', [
-             'nome' => 'Categoria Teste',
-             'descricao' => 'Descrição da Categoria Teste',
-         ]);
+        $this->assertDatabaseHas('categoria', [
+            'nome' => 'Categoria Teste',
+            'descricao' => 'Descrição da Categoria Teste',
+        ]);
     }
 
     public function test_atualizando_categoria()
@@ -105,5 +105,33 @@ class CategoriaControllerTest extends TestCase
             'descricao' => 'Descrição Atualizada',
         ]);
     }
+
+    public function test_excluir_categoria()
+{
+    // Cria um usuário e gera um token
+    $user = User::factory()->create();
+    $token = $user->createToken('Test Token')->plainTextToken;
+
+    // Cria uma categoria para ser excluída
+    $categoria = Categoria::factory()->create([
+        'nome' => 'Categoria teste',
+        'descricao' => 'Descrição teste'
+    ]);
+
+    // Faz a requisição de exclusão
+    $response = $this->withHeaders([ // O método withHeaders adiciona o cabeçalho de autorização corretamente, garantindo que haja um espaço após 'Bearer'.
+        'Authorization' => 'Bearer ' . $token,
+    ])->deleteJson('/api/categoria/excluir/' . $categoria->id);
+
+    // Verifica se o status da resposta é 200
+    $response->assertStatus(200);
+
+    // Verifica se a categoria foi removida do banco de dados
+    $this->assertDatabaseMissing('categoria', [
+        'id' => $categoria->id,
+        'nome' => 'Categoria teste',
+        'descricao' => 'Descrição teste'
+    ]);
+}
 
 }
