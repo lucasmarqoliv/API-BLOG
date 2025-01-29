@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('comentarios', 'avaliacoes', 'categoria', 'tags')->get(); //aqui carrega os posts junto com seus comentarios. e 'comentarios' é o nome do relacionamento no model Post.
+        $posts = Post::with('comentarios', 'categoria', 'tags')->get(); //aqui carrega os posts junto com seus comentarios. e 'comentarios' é o nome do relacionamento no model Post.
         // o get executa a consulta ao banco de dados e retorna todos os registros que correspondem à consulta. O resultado é uma coleção de objetos Post, cada um com seus comentários carregados.
 
         if ($posts->isEmpty()){ // para verificar se a coleção de posts está vazia.
@@ -44,8 +44,9 @@ class PostController extends Controller
         $validacao = Validator::make($request->all(),[
             'titulo' => 'required|string|max:190',
             'conteudo' => 'required|string|max:190',
+            'foto' => 'nullable|string',
             'categoria_id' => 'required|integer|exists:categoria,id',
-            'tags_id' => 'required|integer|exists:tags,id'
+            'tags_id' => 'integer|exists:tags,id'
         ]);
 
         if ($validacao->fails()){
@@ -58,7 +59,7 @@ class PostController extends Controller
         $post = Post::create([ //  O array passado para o método create especifica os valores dos atributos do novo registro.
             'titulo' => $request->titulo, // name do input
             'conteudo' => $request->conteudo,
-            'foto' => $foto,
+            'foto' => $request->foto,
             'categoria_id' => $request->categoria_id,
             'tags_id' => $request->tags_id
             // Define o valor do campo foto do novo registro com o valor da variável $foto, que contém o caminho do arquivo de imagem armazenado.

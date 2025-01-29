@@ -92,6 +92,7 @@ public function test_atualizar_comentario()
     $response = $this->putJson('/api/comentario/update/' .$comentario->id,
     $dadosAtualizados, [
         'Authorization' => 'Bearer '. $token,
+        'X-CSRF-TOKEN' => $csrfToken,
     ]);
 
 
@@ -122,8 +123,11 @@ public function test_excluir_comentario()
         'post_id' => $post->id
     ]);
 
+    $csrfToken = csrf_token();
+
     $response = $this->withHeaders([
         'Authorization' => 'Bearer '. $token,
+        'X-CSRF-TOKEN' => $csrfToken,
     ])->deleteJson('/api/comentario/excluir/' . $comentario->id);
 
     $response->assertStatus(200);

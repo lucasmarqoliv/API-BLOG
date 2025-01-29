@@ -51,9 +51,12 @@ class CategoriaControllerTest extends TestCase
             'descricao' => 'Descrição da categoria teste'
         ];
 
+        $csrfToken = csrf_token();
+
         // Realiza a requisição POST com o token Bearer
         $response = $this->postJson('/api/categoria/salvar', $dados, [
             'Authorization' => 'Bearer ' . $token,
+            'X-CSRF-TOKEN' => $csrfToken,
         ]);
 
          // Verifica se a resposta tem status 201 (Created)
@@ -84,9 +87,12 @@ class CategoriaControllerTest extends TestCase
             'descricao' => 'Descrição Atualizada'
         ];
 
+        $csrfToken = csrf_token();
+
         // Realiza a requisição PUT para atualizar a categoria com o Bearer token
         $response = $this->putJson('/api/categoria/atualizar/' . $categoria->id, $dadosAtualizados, [
             'Authorization' => 'Bearer ' . $token,
+            'X-CSRF-TOKEN' => $csrfToken,
         ]);
 
         // Verifica se a resposta tem status 200 OK
@@ -118,9 +124,12 @@ class CategoriaControllerTest extends TestCase
         'descricao' => 'Descrição teste'
     ]);
 
+    $csrfToken =    csrf_token();
+
     // Faz a requisição de exclusão
     $response = $this->withHeaders([ // O método withHeaders adiciona o cabeçalho de autorização corretamente, garantindo que haja um espaço após 'Bearer'.
         'Authorization' => 'Bearer ' . $token,
+        'X-CSRF-TOKEN' => $csrfToken,
     ])->deleteJson('/api/categoria/excluir/' . $categoria->id);
 
     // Verifica se o status da resposta é 200

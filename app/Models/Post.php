@@ -16,7 +16,7 @@ class Post extends Model
     }
 
     public function categoria(){
-        return $this->belogsTo(Categoria::class);
+        return $this->belongsTo(Categoria::class);
     }
 
     public function tags(){
