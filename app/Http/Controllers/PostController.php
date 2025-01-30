@@ -21,7 +21,7 @@ class PostController extends Controller
 
         if ($posts->isEmpty()){ // para verificar se a coleção de posts está vazia.
             return response()->json([
-                'mensagem' => 'Não existem posts!'
+                'mensagem' => 'Não existem posts!!!'
             ], 404);
         }
 
